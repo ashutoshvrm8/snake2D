@@ -1,15 +1,21 @@
 window.onload = function () {
 	canv = document.getElementById("snake");
+	scoreCounter = document.getElementById("counter");
+	scoreCounter.style.fontSize = "50px";
 	ctx = canv.getContext("2d");
 	document.addEventListener("keydown", keyPress);
-	setInterval(game, 1000 / 15);
+	setInterval(game, 1000 / 12);
+	setInterval(() => {
+		scoreCounter.innerHTML = "Score : " + score;
+	}, 1000 / 15);
 }
-px = py = 10;
+px = py = 20;
 gs = tc = 20;
 ax = ay = 15;
 xv = yv = 0;
 trail = [];
 tail = 5;
+score = 0;
 
 function game() {
 	px += xv;
@@ -46,9 +52,11 @@ function game() {
 
 	if (ax == px && ay == py) {
 		tail++;
+		score += Math.round(tail * 1.4);
 		ax = Math.floor(Math.random() * tc);
 		ay = Math.floor(Math.random() * tc);
 	}
+
 	ctx.fillStyle = "red";
 	ctx.fillRect(ax * gs, ay * gs, gs - 2, gs - 2);
 }
